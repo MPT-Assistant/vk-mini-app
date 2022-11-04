@@ -13,9 +13,17 @@ import {
   Footer,
   Placeholder,
   Spinner,
+  Calendar,
+  useAdaptivity,
+  ViewWidth,
 } from "@vkontakte/vkui";
+import { RichTooltip } from "@vkontakte/vkui/unstable";
 import api from "../../TS/api";
 import session from "../../TS/store/session";
+import { autorun } from "mobx";
+import moment from "moment";
+
+import store from "./store";
 
 const Lesson = ({
   lesson,
@@ -37,31 +45,45 @@ const Lesson = ({
 };
 
 const Week = ({ week }: { week: IWeek }): JSX.Element => {
+  const { viewWidth } = useAdaptivity();
+  const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET;
+  const [isTooltipShown, setTooltipShown] = useState(false);
+
   return (
-    <RichCell
-      hasActive={false}
-      hasHover={false}
-      text={week.value}
-      subhead="Неделя"
+    <RichTooltip
+      content={
+        <Calendar
+          value={store.date}
+          onChange={(date) => (store.date = date || new Date())}
+        />
+      }
+      shown={isDesktop ? undefined : isTooltipShown}
     >
-      {week.date}
-    </RichCell>
+      <RichCell
+        onClick={isDesktop ? undefined : () => setTooltipShown(!isTooltipShown)}
+        hasActive={false}
+        hasHover={false}
+        text={week.value}
+        subhead="Дата"
+      >
+        {week.date}
+      </RichCell>
+    </RichTooltip>
   );
 };
 
 const Schedule = () => {
-  const [schedule, setSchedule] = useState<IScheduleGetResponse | null>(null);
-
   useEffect(() => {
-    (async () => {
-      const schedule = await api.schedule.get({
+    return autorun(async () => {
+      store.schedule = null;
+      store.schedule = await api.schedule.get({
         group: session.user.group,
+        date: moment(store.date).format("DD.MM.YYYY"),
       });
-      setSchedule(schedule);
-    })();
+    });
   }, []);
 
-  if (schedule === null) {
+  if (store.schedule === null) {
     return (
       <Group separator="hide">
         <Placeholder>
@@ -80,24 +102,26 @@ const Schedule = () => {
           justifyContent: "space-around",
         }}
       >
-        <Week week={schedule.week} />
+        <Week week={store.schedule.week} />
         <RichCell hasActive={false} hasHover={false} subhead="Место">
-          {schedule.place}
+          {store.schedule.place}
         </RichCell>
       </div>
       <Group separator="hide" mode="plain">
         <List>
-          {schedule.lessons.map((lesson, index) => (
+          {store.schedule.lessons.map((lesson, index) => (
             <>
-              <Lesson lesson={lesson} />
-              {index !== schedule.lessons.length - 1 && <Separator />}
+              <Lesson lesson={lesson} key={`lesson-${index}`} />
+              {index !== store.schedule!.lessons.length - 1 && (
+                <Separator key={`separator-${index}`} />
+              )}
             </>
           ))}
         </List>
       </Group>
       <Footer>
-        {schedule.lessons.length}{" "}
-        {utils.string.declOfNum(schedule.lessons.length, [
+        {store.schedule.lessons.length}{" "}
+        {utils.string.declOfNum(store.schedule.lessons.length, [
           "пара",
           "пары",
           "пар",

@@ -30,22 +30,6 @@ const Layout = () => {
   const hasHeader = platform !== VKCOM;
   const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET;
 
-  const activePanelName = useMemo(() => {
-    if (!isDesktop) {
-      return "MPT Assistant";
-    } else {
-      switch (router.activeView) {
-        case "schedule":
-          return "Расписание";
-        case "profile":
-          return "Профиль";
-
-        default:
-          return "MPT Assistant";
-      }
-    }
-  }, [router.activeView]);
-
   return (
     <SplitLayout
       style={{
