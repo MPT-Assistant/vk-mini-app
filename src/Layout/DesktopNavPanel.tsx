@@ -5,10 +5,11 @@ import {
   Group,
   Cell,
   PanelHeaderBack,
+  Spacing,
 } from "@vkontakte/vkui";
 import { observer } from "mobx-react";
 import router from "../TS/store/router";
-import { Icon28CubeBoxOutline } from "@vkontakte/icons";
+import { Icon28CubeBoxOutline, Icon28Profile } from "@vkontakte/icons";
 
 const DesktopNavPanel = () => {
   const activeViewStyle: React.CSSProperties = {
@@ -41,6 +42,29 @@ const DesktopNavPanel = () => {
           }
         >
           Главная
+        </Cell>
+        <Spacing />
+        <Cell
+          onClick={(): void => {
+            router.activeView = "profile";
+          }}
+          hasActive={router.activeView !== "profile"}
+          hasHover={router.activeView !== "profile"}
+          style={router.activeView === "profile" ? activeViewStyle : {}}
+          before={<Icon28Profile />}
+          after={
+            router.activeView === "profile" &&
+            router.activePanel !== null && (
+              <PanelHeaderBack
+                size={24}
+                onClick={(): void => {
+                  router.activePanel = null;
+                }}
+              />
+            )
+          }
+        >
+          Профиль
         </Cell>
       </Group>
     </SplitCol>

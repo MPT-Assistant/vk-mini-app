@@ -21,6 +21,7 @@ import bridge, {
 import { SMALL_TABLET_SIZE } from "@vkontakte/vkui/dist/components/AdaptivityProvider/AdaptivityProvider";
 import api from "./TS/api";
 import session from "./TS/store/session";
+import { observer } from "mobx-react";
 
 function currentPlatform(): Platform {
   if (
@@ -36,11 +37,6 @@ function currentPlatform(): Platform {
 const App = () => {
   const [platform, setPlatform] = useState<Platform>(currentPlatform());
   const [appearance, setAppearance] = useState<AppearanceType>("dark");
-
-  const onWebAppInit = async () => {
-    const user = await api.app.getUser();
-    session.user = user;
-  }
 
   useEffect((): void => {
     function updateConfig({ appearance }: VKUpdateConfigData) {
@@ -67,7 +63,14 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    bridge.send("VKWebAppInit").then(onWebAppInit);
+    void (async () => {
+      const launchParams = await bridge.send("VKWebAppGetLaunchParams");
+      session.launchParams = launchParams;
+      const user = await api.app.getUser();
+      const [userInfo] = await api.app.getUsersInfo([user.id]);
+      session.user = { ...user, ...userInfo };
+      await bridge.send("VKWebAppInit");
+    })();
   }, []);
 
   return (
@@ -86,4 +89,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default observer(App);

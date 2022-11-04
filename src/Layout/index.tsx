@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
   Epic,
   Group,
@@ -18,6 +18,9 @@ import router from "../TS/store/router";
 
 import DesktopNavPanel from "./DesktopNavPanel";
 import MobileTabbar from "./MobileTabbar";
+import { observer } from "mobx-react";
+
+import ProfilePage from "../pages/Profile";
 
 const Layout = () => {
   const platform = usePlatform();
@@ -25,6 +28,22 @@ const Layout = () => {
 
   const hasHeader = platform !== VKCOM;
   const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET;
+
+  const activePanelName = useMemo(() => {
+    if (!isDesktop) {
+      return "MPT Assistant";
+    } else {
+      switch (router.activeView) {
+        case "":
+          return "Главная";
+        case "profile":
+          return "Профиль";
+      
+        default:
+          return "MPT Assistant"
+      }
+    }
+  }, [router.activeView])
 
   return (
     <SplitLayout
@@ -52,9 +71,8 @@ const Layout = () => {
               />
             )
           }
-        >
-          {!isDesktop && "MPT Assistant"}
-        </PanelHeader>
+          children={activePanelName}
+        />
 
         <Epic
           id="default"
@@ -64,10 +82,15 @@ const Layout = () => {
           <View id="" activePanel="default">
             <Panel id="default" children={<Group>Hello, world!</Group>} />
           </View>
+          <View id="profile" activePanel="default">
+            <Panel id="default">
+              <ProfilePage />
+            </Panel>
+          </View>
         </Epic>
       </SplitCol>
     </SplitLayout>
   );
 };
 
-export default Layout;
+export default observer(Layout);

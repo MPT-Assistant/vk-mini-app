@@ -1,9 +1,9 @@
 import { GetLaunchParamsResponse } from "@vkontakte/vk-bridge";
-import { IUser } from "../api/sections/app";
+import { IUser, IUserInfo } from "../api/sections/app";
 
 class Session {
   public launchParams!: GetLaunchParamsResponse;
-  public user!: IUser;
+  public user!: IUser & IUserInfo;
 
   public get sign(): string {
     return new URLSearchParams(
