@@ -16,6 +16,7 @@ import {
   Calendar,
   useAdaptivity,
   ViewWidth,
+  Header,
 } from "@vkontakte/vkui";
 import { RichTooltip } from "@vkontakte/vkui/unstable";
 import api from "../../TS/api";
@@ -107,7 +108,20 @@ const Schedule = () => {
           {store.schedule.place}
         </RichCell>
       </div>
-      <Group separator="hide" mode="plain">
+      <Group
+        separator="hide"
+        mode="plain"
+        header={
+          <Header mode="tertiary">
+            {store.schedule.lessons.length}{" "}
+            {utils.string.declOfNum(store.schedule.lessons.length, [
+              "пара",
+              "пары",
+              "пар",
+            ])} 
+          </Header>
+        }
+      >
         <List>
           {store.schedule.lessons.map((lesson, index) => (
             <>
@@ -119,14 +133,6 @@ const Schedule = () => {
           ))}
         </List>
       </Group>
-      <Footer>
-        {store.schedule.lessons.length}{" "}
-        {utils.string.declOfNum(store.schedule.lessons.length, [
-          "пара",
-          "пары",
-          "пар",
-        ])}
-      </Footer>
     </Group>
   );
 };
