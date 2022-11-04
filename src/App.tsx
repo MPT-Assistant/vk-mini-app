@@ -19,6 +19,8 @@ import bridge, {
   VKUpdateConfigData,
 } from "@vkontakte/vk-bridge";
 import { SMALL_TABLET_SIZE } from "@vkontakte/vkui/dist/components/AdaptivityProvider/AdaptivityProvider";
+import api from "./TS/api";
+import session from "./TS/store/session";
 
 function currentPlatform(): Platform {
   if (
@@ -34,6 +36,11 @@ function currentPlatform(): Platform {
 const App = () => {
   const [platform, setPlatform] = useState<Platform>(currentPlatform());
   const [appearance, setAppearance] = useState<AppearanceType>("dark");
+
+  const onWebAppInit = async () => {
+    const user = await api.app.getUser();
+    session.user = user;
+  }
 
   useEffect((): void => {
     function updateConfig({ appearance }: VKUpdateConfigData) {
@@ -57,6 +64,10 @@ const App = () => {
 
     window.addEventListener("resize", onResize, false);
     return () => window.removeEventListener("resize", onResize, false);
+  }, []);
+
+  useEffect(() => {
+    bridge.send("VKWebAppInit").then(onWebAppInit);
   }, []);
 
   return (

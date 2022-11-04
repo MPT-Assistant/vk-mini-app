@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 
 module.exports = {
     mode: "production",
@@ -95,6 +96,7 @@ module.exports = {
                     },
                 },
             }),
+            new NodePolyfillPlugin()
         ],
         mangleExports: "size",
         splitChunks: {

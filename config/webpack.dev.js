@@ -2,6 +2,7 @@ const path = require("node:path");
 
 const webpack = require(`webpack`);
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 
 module.exports = {
     mode: "development",
@@ -65,6 +66,13 @@ module.exports = {
     },
     resolve: {
         extensions: [".js", ".jsx", ".ts", ".tsx"],
+        fallback: {
+            buffer: require.resolve("buffer/"),
+            stream: require.resolve("stream-browserify"),
+            zlib: require.resolve("browserify-zlib"),
+            https: require.resolve("https-browserify"),
+            http: require.resolve("stream-http")
+        }
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -73,5 +81,6 @@ module.exports = {
         new webpack.ProvidePlugin({
             Buffer: ["buffer", "Buffer"],
         }),
+        new NodePolyfillPlugin()
     ],
 };

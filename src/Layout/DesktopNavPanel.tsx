@@ -17,7 +17,7 @@ const DesktopNavPanel = () => {
   };
 
   return (
-    <SplitCol fixed width={"20vw"} maxWidth={"20vw"}>
+    <SplitCol fixed width={"35vw"} maxWidth={"35vw"}>
       <PanelHeader separator>MPT Assistant</PanelHeader>
       <Group>
         <Cell

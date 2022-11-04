@@ -24,7 +24,7 @@ const Layout = () => {
   const { viewWidth } = useAdaptivity();
 
   const hasHeader = platform !== VKCOM;
-  const isDesktop = viewWidth >= ViewWidth.TABLET;
+  const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET;
 
   return (
     <SplitLayout
@@ -38,8 +38,8 @@ const Layout = () => {
       <SplitCol
         animate={!isDesktop}
         spaced={isDesktop}
-        width={isDesktop ? "45vw" : "100%"}
-        maxWidth={isDesktop ? "45vw" : "100%"}
+        width={isDesktop ? "55vw" : "100%"}
+        maxWidth={isDesktop ? "55vw" : "100%"}
       >
         <PanelHeader
           after={

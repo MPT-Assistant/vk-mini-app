@@ -1,4 +1,5 @@
 import { API } from "@mpt-assistant/api-wrapper";
+import session from "../../store/session";
 
 interface IUser {
     id: number;
@@ -20,7 +21,9 @@ class APIApp {
   }
 
   public async getUser(): Promise<IUser> {
-    return this._call("app.getUser");
+    return this._call("app.getUser", {
+        sign: session.sign
+    });
   }
 }
 
