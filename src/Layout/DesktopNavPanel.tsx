@@ -23,14 +23,14 @@ const DesktopNavPanel = () => {
       <Group>
         <Cell
           onClick={(): void => {
-            router.activeView = "";
+            router.activeView = "schedule";
           }}
-          hasActive={router.activeView !== ""}
-          hasHover={router.activeView !== ""}
-          style={router.activeView === "" ? activeViewStyle : {}}
+          hasActive={router.activeView !== "schedule"}
+          hasHover={router.activeView !== "schedule"}
+          style={router.activeView === "schedule" ? activeViewStyle : {}}
           before={<Icon28CubeBoxOutline />}
           after={
-            router.activeView === "" &&
+            router.activeView === "schedule" &&
             router.activePanel !== null && (
               <PanelHeaderBack
                 size={24}
@@ -41,7 +41,7 @@ const DesktopNavPanel = () => {
             )
           }
         >
-          Главная
+          Расписание
         </Cell>
         <Spacing />
         <Cell

@@ -6,6 +6,8 @@ import {
   ConfigProvider,
   platform,
   Platform,
+  ScreenSpinner,
+  SplitLayout,
   WebviewType,
 } from "@vkontakte/vkui";
 import Layout from "./Layout";
@@ -37,6 +39,7 @@ function currentPlatform(): Platform {
 const App = () => {
   const [platform, setPlatform] = useState<Platform>(currentPlatform());
   const [appearance, setAppearance] = useState<AppearanceType>("dark");
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect((): void => {
     function updateConfig({ appearance }: VKUpdateConfigData) {
@@ -70,6 +73,7 @@ const App = () => {
       const [userInfo] = await api.app.getUsersInfo([user.id]);
       session.user = { ...user, ...userInfo };
       await bridge.send("VKWebAppInit");
+      setIsLoaded(true);
     })();
   }, []);
 
@@ -82,7 +86,11 @@ const App = () => {
     >
       <AdaptivityProvider>
         <AppRoot mode="full">
-          <Layout />
+          {isLoaded ? (
+            <Layout />
+          ) : (
+            <SplitLayout popout={<ScreenSpinner state="loading" />} />
+          )}
         </AppRoot>
       </AdaptivityProvider>
     </ConfigProvider>

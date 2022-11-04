@@ -48,7 +48,7 @@ class Router implements IRouterProps {
 
     private static _createDefaultSession(): IRouterProps {
         return {
-            activeView: "",
+            activeView: "schedule",
             activePanel: null,
             activeModal: null,
             popout: null,
@@ -74,7 +74,7 @@ class Router implements IRouterProps {
     }
 
     private _updatePath(): void {
-        let newHash = "";
+        let newHash = "schedule";
 
         if (this._activeView !== null) {
             newHash += `/${this._activeView}`;

@@ -20,6 +20,7 @@ import DesktopNavPanel from "./DesktopNavPanel";
 import MobileTabbar from "./MobileTabbar";
 import { observer } from "mobx-react";
 
+import SchedulePage from "../pages/Schedule";
 import ProfilePage from "../pages/Profile";
 
 const Layout = () => {
@@ -34,21 +35,21 @@ const Layout = () => {
       return "MPT Assistant";
     } else {
       switch (router.activeView) {
-        case "":
-          return "Главная";
+        case "schedule":
+          return "Расписание";
         case "profile":
           return "Профиль";
-      
+
         default:
-          return "MPT Assistant"
+          return "MPT Assistant";
       }
     }
-  }, [router.activeView])
+  }, [router.activeView]);
 
   return (
     <SplitLayout
       style={{
-        justifyContent: "center"
+        justifyContent: "center",
       }}
       header={hasHeader && <PanelHeader separator={false} />}
     >
@@ -60,30 +61,20 @@ const Layout = () => {
         width={isDesktop ? "55vw" : "100%"}
         maxWidth={isDesktop ? "55vw" : "100%"}
       >
-        <PanelHeader
-          after={
-            !isDesktop &&
-            router.activePanel !== null && (
-              <PanelHeaderBack
-                onClick={(): void => {
-                  router.activePanel = null;
-                }}
-              />
-            )
-          }
-          children={activePanelName}
-        />
-
         <Epic
           id="default"
           activeStory={router.activeView}
           tabbar={!isDesktop && <MobileTabbar />}
         >
-          <View id="" activePanel="default">
-            <Panel id="default" children={<Group>Hello, world!</Group>} />
+          <View id="schedule" activePanel="default">
+            <Panel id="default">
+              <PanelHeader separator={false} children="Расписание" />
+              <SchedulePage />
+            </Panel>
           </View>
           <View id="profile" activePanel="default">
             <Panel id="default">
+              <PanelHeader separator={false} children="Профиль" />
               <ProfilePage />
             </Panel>
           </View>
