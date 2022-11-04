@@ -1,0 +1,19 @@
+* {
+  outline: none;
+}
+
+*:not(input):not(textarea),
+::after,
+::before {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Отступ 16 пикселей сверху */
+.vkuiSplitLayout--vkcom .vkuiSplitLayout__inner {
+  margin-top: 16px;
+}
+
+body[scheme*="vkcom"] {
+  height: calc(100% - 16px) !important;
+}
