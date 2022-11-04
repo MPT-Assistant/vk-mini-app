@@ -64,14 +64,7 @@ module.exports = {
         ],
     },
     resolve: {
-        extensions: [".js", ".jsx", ".ts", ".tsx"],
-        fallback: {
-            buffer: require.resolve("buffer/"),
-            stream: require.resolve("stream-browserify"),
-            zlib: require.resolve("browserify-zlib"),
-            https: require.resolve("https-browserify"),
-            http: require.resolve("stream-http")
-        }
+        extensions: [".js", ".jsx", ".ts", ".tsx"]
     },
     plugins: [
         new HtmlWebpackPlugin({
