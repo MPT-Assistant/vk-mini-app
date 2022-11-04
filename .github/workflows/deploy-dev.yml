@@ -1,0 +1,18 @@
+name: Deploy VK Mini App
+on:
+  push:
+    branches: [dev]
+jobs:
+  deploy:
+    env:
+      NODE_VERSION: 17.x
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - run: npm install --legacy-peer-deps
+      - run: npm run build
+      - run: env MINI_APPS_ENVIRONMENT=dev MINI_APPS_ACCESS_TOKEN=${{ secrets.MINI_APPS_ACCESS_TOKEN }} npm run deploy

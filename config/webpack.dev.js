@@ -2,7 +2,6 @@ const path = require("node:path");
 
 const webpack = require(`webpack`);
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 
 module.exports = {
     mode: "development",
@@ -80,7 +79,6 @@ module.exports = {
         }),
         new webpack.ProvidePlugin({
             Buffer: ["buffer", "Buffer"],
-        }),
-        new NodePolyfillPlugin()
+        })
     ],
 };
