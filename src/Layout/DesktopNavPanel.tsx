@@ -9,7 +9,7 @@ import {
 } from "@vkontakte/vkui";
 import { observer } from "mobx-react";
 import router from "../TS/store/router";
-import { Icon28CubeBoxOutline, Icon28Profile } from "@vkontakte/icons";
+import { Icon28GridSquareOutline, Icon28Profile } from "@vkontakte/icons";
 
 const DesktopNavPanel = () => {
   const activeViewStyle: React.CSSProperties = {
@@ -28,7 +28,7 @@ const DesktopNavPanel = () => {
           hasActive={router.activeView !== "schedule"}
           hasHover={router.activeView !== "schedule"}
           style={router.activeView === "schedule" ? activeViewStyle : {}}
-          before={<Icon28CubeBoxOutline />}
+          before={<Icon28GridSquareOutline />}
           after={
             router.activeView === "schedule" &&
             router.activePanel !== null && (

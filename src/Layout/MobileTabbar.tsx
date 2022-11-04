@@ -1,4 +1,4 @@
-import { Icon28CubeBoxOutline, Icon28Profile } from "@vkontakte/icons";
+import { Icon28GridSquareOutline, Icon28Profile } from "@vkontakte/icons";
 import { Tabbar, TabbarItem } from "@vkontakte/vkui";
 import React from "react";
 
@@ -19,7 +19,7 @@ const MobileTabbar = () => {
         }
         text="Расписание"
       >
-        <Icon28CubeBoxOutline />
+        <Icon28GridSquareOutline />
       </TabbarItem>
       <TabbarItem
         onClick={(): void => {
