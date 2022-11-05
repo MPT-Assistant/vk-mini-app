@@ -1,4 +1,8 @@
-import { Icon28GridSquareOutline, Icon28Profile } from "@vkontakte/icons";
+import {
+  Icon28ListArrowLeftDownOutline,
+  Icon28ListBulletSquareOutline,
+  Icon28Profile,
+} from "@vkontakte/icons";
 import { Tabbar, TabbarItem } from "@vkontakte/vkui";
 import React from "react";
 
@@ -11,6 +15,18 @@ const MobileTabbar = () => {
     <Tabbar mode="vertical">
       <TabbarItem
         onClick={(): void => {
+          router.activeView = "replacements";
+        }}
+        selected={router.activeView === "replacements"}
+        disabled={
+          router.activeView === "replacements" && router.activePanel === null
+        }
+        text="Замены"
+      >
+        <Icon28ListArrowLeftDownOutline />
+      </TabbarItem>
+      <TabbarItem
+        onClick={(): void => {
           router.activeView = "schedule";
         }}
         selected={router.activeView === "schedule"}
@@ -19,7 +35,7 @@ const MobileTabbar = () => {
         }
         text="Расписание"
       >
-        <Icon28GridSquareOutline />
+        <Icon28ListBulletSquareOutline />
       </TabbarItem>
       <TabbarItem
         onClick={(): void => {

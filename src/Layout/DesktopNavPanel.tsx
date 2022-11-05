@@ -9,7 +9,11 @@ import {
 } from "@vkontakte/vkui";
 import { observer } from "mobx-react";
 import router from "../TS/store/router";
-import { Icon28GridSquareOutline, Icon28Profile } from "@vkontakte/icons";
+import {
+  Icon28ListBulletSquareOutline,
+  Icon28ListArrowLeftDownOutline,
+  Icon28Profile,
+} from "@vkontakte/icons";
 
 const DesktopNavPanel = () => {
   const activeViewStyle: React.CSSProperties = {
@@ -28,7 +32,7 @@ const DesktopNavPanel = () => {
           hasActive={router.activeView !== "schedule"}
           hasHover={router.activeView !== "schedule"}
           style={router.activeView === "schedule" ? activeViewStyle : {}}
-          before={<Icon28GridSquareOutline />}
+          before={<Icon28ListBulletSquareOutline />}
           after={
             router.activeView === "schedule" &&
             router.activePanel !== null && (
@@ -42,6 +46,29 @@ const DesktopNavPanel = () => {
           }
         >
           Расписание
+        </Cell>
+        <Spacing />
+        <Cell
+          onClick={(): void => {
+            router.activeView = "replacements";
+          }}
+          hasActive={router.activeView !== "replacements"}
+          hasHover={router.activeView !== "replacements"}
+          style={router.activeView === "replacements" ? activeViewStyle : {}}
+          before={<Icon28ListArrowLeftDownOutline />}
+          after={
+            router.activeView === "replacements" &&
+            router.activePanel !== null && (
+              <PanelHeaderBack
+                size={24}
+                onClick={(): void => {
+                  router.activePanel = null;
+                }}
+              />
+            )
+          }
+        >
+          Замены
         </Cell>
         <Spacing />
         <Cell

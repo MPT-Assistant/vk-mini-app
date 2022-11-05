@@ -22,6 +22,7 @@ import { observer } from "mobx-react";
 
 import SchedulePage from "../pages/Schedule";
 import ProfilePage from "../pages/Profile";
+import ReplacementsPage from "../pages/Replacements";
 
 const Layout = () => {
   const platform = usePlatform();
@@ -54,6 +55,12 @@ const Layout = () => {
             <Panel id="default">
               <PanelHeader separator={false} children="Расписание" />
               <SchedulePage />
+            </Panel>
+          </View>
+          <View id="replacements" activePanel="default">
+            <Panel id="default">
+              <PanelHeader separator={false} children="Замены" />
+              <ReplacementsPage />
             </Panel>
           </View>
           <View id="profile" activePanel="default">

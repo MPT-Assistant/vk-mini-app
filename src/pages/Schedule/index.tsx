@@ -10,12 +10,13 @@ import {
   Group,
   List,
   Separator,
-  Footer,
   Placeholder,
   Spinner,
   Calendar,
   useAdaptivity,
   ViewWidth,
+  Header,
+  Div,
 } from "@vkontakte/vkui";
 import { RichTooltip } from "@vkontakte/vkui/unstable";
 import api from "../../TS/api";
@@ -24,6 +25,7 @@ import { autorun } from "mobx";
 import moment from "moment";
 
 import store from "./store";
+import SelectDateButtons from "../../components/SelectDateButtons";
 
 const Lesson = ({
   lesson,
@@ -107,7 +109,20 @@ const Schedule = () => {
           {store.schedule.place}
         </RichCell>
       </div>
-      <Group separator="hide" mode="plain">
+      <Group
+        separator="hide"
+        mode="plain"
+        header={
+          <Header mode="tertiary">
+            {store.schedule.lessons.length}{" "}
+            {utils.string.declOfNum(store.schedule.lessons.length, [
+              "пара",
+              "пары",
+              "пар",
+            ])}
+          </Header>
+        }
+      >
         <List>
           {store.schedule.lessons.map((lesson, index) => (
             <>
@@ -119,14 +134,12 @@ const Schedule = () => {
           ))}
         </List>
       </Group>
-      <Footer>
-        {store.schedule.lessons.length}{" "}
-        {utils.string.declOfNum(store.schedule.lessons.length, [
-          "пара",
-          "пары",
-          "пар",
-        ])}
-      </Footer>
+      <Div>
+        <SelectDateButtons
+          date={store.date}
+          onChange={(date) => (store.date = date)}
+        />
+      </Div>
     </Group>
   );
 };
