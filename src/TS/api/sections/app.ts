@@ -64,6 +64,13 @@ class APIApp {
       user_ids
     });
   }
+
+  public async setUserGroup(group: string): Promise<true> {
+    return this._call("app.setUserGroup", {
+      sign: session.sign,
+      group
+    });
+  }
 }
 
 export type { IUser, IUserInfo };

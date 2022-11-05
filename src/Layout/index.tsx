@@ -22,11 +22,14 @@ import DesktopNavPanel from "./DesktopNavPanel";
 import MobileTabbar from "./MobileTabbar";
 import { observer } from "mobx-react";
 
+import { Icon56UsersOutline } from "@vkontakte/icons";
+
+import session from "../TS/store/session";
+import Modal from "./modal";
+
 import SchedulePage from "../pages/Schedule";
 import ProfilePage from "../pages/Profile";
 import ReplacementsPage from "../pages/Replacements";
-import session from "../TS/store/session";
-import { Icon56UsersOutline } from "@vkontakte/icons";
 
 const Layout = () => {
   const platform = usePlatform();
@@ -41,6 +44,7 @@ const Layout = () => {
         justifyContent: "center",
       }}
       header={hasHeader && <PanelHeader separator={false} />}
+      modal={<Modal />}
     >
       {isDesktop && <DesktopNavPanel />}
 

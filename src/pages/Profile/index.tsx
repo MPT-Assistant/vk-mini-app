@@ -11,6 +11,7 @@ import { observer } from "mobx-react";
 import session from "../../TS/store/session";
 import { Icon28CalendarOutline, Icon28Users } from "@vkontakte/icons";
 import moment from "moment";
+import router from "../../TS/store/router";
 
 const Profile = () => {
   return (
@@ -34,7 +35,12 @@ const Profile = () => {
             {session.user.name} {session.user.surname}
           </Title>
         </div>
-        <SimpleCell before={<Icon28Users />}>
+        <SimpleCell
+          before={<Icon28Users />}
+          onClick={() => {
+            router.activeModal = "group-select-card";
+          }}
+        >
           Группа: {session.user.group || "Не установлена"}
         </SimpleCell>
         <SimpleCell disabled before={<Icon28CalendarOutline />}>
