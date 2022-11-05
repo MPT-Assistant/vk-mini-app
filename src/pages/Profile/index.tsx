@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Avatar,
-  Group,
-  Header,
-  SimpleCell,
-  Switch,
-  Title,
-} from "@vkontakte/vkui";
+import { Avatar, Group, SimpleCell, Title } from "@vkontakte/vkui";
 import { observer } from "mobx-react";
 import session from "../../TS/store/session";
 import { Icon28CalendarOutline, Icon28Users } from "@vkontakte/icons";

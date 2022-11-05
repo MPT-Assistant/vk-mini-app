@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import utils from "@rus-anonym/web-utils";
 import {
-  IScheduleGetResponse,
   IWeek,
   IExtendedLesson,
 } from "@mpt-assistant/api-wrapper";
@@ -76,7 +75,7 @@ const Schedule = () => {
     return autorun(async () => {
       store.schedule = null;
       store.schedule = await api.schedule.get({
-        group: session.user.group,
+        group: session.user.group as string,
         date: moment(store.date).format("DD.MM.YYYY"),
       });
     });
