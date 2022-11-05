@@ -5,7 +5,7 @@ import session from "../../store/session";
 
 interface IUser {
   id: number;
-  group: string;
+  group?: string;
   nickname: string;
   mailings: {
     replacements: boolean;
@@ -62,6 +62,13 @@ class APIApp {
     return this._call("app.getUsersInfo", {
       sign: session.sign,
       user_ids
+    });
+  }
+
+  public async setUserGroup(group: string): Promise<true> {
+    return this._call("app.setUserGroup", {
+      sign: session.sign,
+      group
     });
   }
 }

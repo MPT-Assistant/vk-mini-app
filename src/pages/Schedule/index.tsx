@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import utils from "@rus-anonym/web-utils";
 import {
-  IScheduleGetResponse,
   IWeek,
-} from "@mpt-assistant/api-wrapper/lib/types";
+  IExtendedLesson,
+} from "@mpt-assistant/api-wrapper";
 import {
   RichCell,
   Group,
@@ -27,11 +27,7 @@ import moment from "moment";
 import store from "./store";
 import SelectDateButtons from "../../components/SelectDateButtons";
 
-const Lesson = ({
-  lesson,
-}: {
-  lesson: IScheduleGetResponse["lessons"][number];
-}): JSX.Element => {
+const Lesson = ({ lesson }: { lesson: IExtendedLesson }): JSX.Element => {
   return (
     <RichCell
       hasActive={false}
@@ -39,7 +35,7 @@ const Lesson = ({
       multiline
       text={lesson.teacher}
       before={`${lesson.num}.`}
-      //   after="08:30:00 - 10:00:00" // TODO: Добавить время
+      after={`${lesson.start} - ${lesson.end}`}
     >
       {lesson.name}
     </RichCell>
@@ -79,7 +75,7 @@ const Schedule = () => {
     return autorun(async () => {
       store.schedule = null;
       store.schedule = await api.schedule.get({
-        group: session.user.group,
+        group: session.user.group as string,
         date: moment(store.date).format("DD.MM.YYYY"),
       });
     });

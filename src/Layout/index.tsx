@@ -1,10 +1,12 @@
 import React, { useMemo } from "react";
 import {
+  Button,
   Epic,
   Group,
   Panel,
   PanelHeader,
   PanelHeaderBack,
+  Placeholder,
   SplitCol,
   SplitLayout,
   useAdaptivity,
@@ -19,6 +21,11 @@ import router from "../TS/store/router";
 import DesktopNavPanel from "./DesktopNavPanel";
 import MobileTabbar from "./MobileTabbar";
 import { observer } from "mobx-react";
+
+import { Icon56UsersOutline } from "@vkontakte/icons";
+
+import session from "../TS/store/session";
+import Modal from "./modal";
 
 import SchedulePage from "../pages/Schedule";
 import ProfilePage from "../pages/Profile";
@@ -37,6 +44,7 @@ const Layout = () => {
         justifyContent: "center",
       }}
       header={hasHeader && <PanelHeader separator={false} />}
+      modal={<Modal />}
     >
       {isDesktop && <DesktopNavPanel />}
 
@@ -54,13 +62,35 @@ const Layout = () => {
           <View id="schedule" activePanel="default">
             <Panel id="default">
               <PanelHeader separator={false} children="Расписание" />
-              <SchedulePage />
+              {session.user.group ? (
+                <SchedulePage />
+              ) : (
+                <Group>
+                  <Placeholder
+                    icon={<Icon56UsersOutline />}
+                    header="У вас не установлена группа"
+                  >
+                    Необходимо установить группу в профиле
+                  </Placeholder>
+                </Group>
+              )}
             </Panel>
           </View>
           <View id="replacements" activePanel="default">
             <Panel id="default">
               <PanelHeader separator={false} children="Замены" />
-              <ReplacementsPage />
+              {session.user.group ? (
+                <ReplacementsPage />
+              ) : (
+                <Group>
+                  <Placeholder
+                    icon={<Icon56UsersOutline />}
+                    header="У вас не установлена группа"
+                  >
+                    Необходимо установить группу в профиле
+                  </Placeholder>
+                </Group>
+              )}
             </Panel>
           </View>
           <View id="profile" activePanel="default">
