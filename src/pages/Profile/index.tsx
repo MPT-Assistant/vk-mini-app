@@ -34,8 +34,8 @@ const Profile = () => {
             {session.user.name} {session.user.surname}
           </Title>
         </div>
-        <SimpleCell disabled before={<Icon28Users />}>
-          Группа: {session.user.group}
+        <SimpleCell before={<Icon28Users />}>
+          Группа: {session.user.group || "Не установлена"}
         </SimpleCell>
         <SimpleCell disabled before={<Icon28CalendarOutline />}>
           Дата регистрации:{" "}

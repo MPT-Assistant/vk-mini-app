@@ -1,10 +1,12 @@
 import React, { useMemo } from "react";
 import {
+  Button,
   Epic,
   Group,
   Panel,
   PanelHeader,
   PanelHeaderBack,
+  Placeholder,
   SplitCol,
   SplitLayout,
   useAdaptivity,
@@ -23,6 +25,8 @@ import { observer } from "mobx-react";
 import SchedulePage from "../pages/Schedule";
 import ProfilePage from "../pages/Profile";
 import ReplacementsPage from "../pages/Replacements";
+import session from "../TS/store/session";
+import { Icon56UsersOutline } from "@vkontakte/icons";
 
 const Layout = () => {
   const platform = usePlatform();
@@ -54,13 +58,35 @@ const Layout = () => {
           <View id="schedule" activePanel="default">
             <Panel id="default">
               <PanelHeader separator={false} children="Расписание" />
-              <SchedulePage />
+              {session.user.group ? (
+                <SchedulePage />
+              ) : (
+                <Group>
+                  <Placeholder
+                    icon={<Icon56UsersOutline />}
+                    header="У вас не установлена группа"
+                  >
+                    Необходимо установить группу в профиле
+                  </Placeholder>
+                </Group>
+              )}
             </Panel>
           </View>
           <View id="replacements" activePanel="default">
             <Panel id="default">
               <PanelHeader separator={false} children="Замены" />
-              <ReplacementsPage />
+              {session.user.group ? (
+                <ReplacementsPage />
+              ) : (
+                <Group>
+                  <Placeholder
+                    icon={<Icon56UsersOutline />}
+                    header="У вас не установлена группа"
+                  >
+                    Необходимо установить группу в профиле
+                  </Placeholder>
+                </Group>
+              )}
             </Panel>
           </View>
           <View id="profile" activePanel="default">

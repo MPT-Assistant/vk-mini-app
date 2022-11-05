@@ -5,7 +5,7 @@ import session from "../../store/session";
 
 interface IUser {
   id: number;
-  group: string;
+  group?: string;
   nickname: string;
   mailings: {
     replacements: boolean;
