@@ -10,13 +10,13 @@ import {
   Group,
   List,
   Separator,
-  Footer,
   Placeholder,
   Spinner,
   Calendar,
   useAdaptivity,
   ViewWidth,
   Header,
+  Div,
 } from "@vkontakte/vkui";
 import { RichTooltip } from "@vkontakte/vkui/unstable";
 import api from "../../TS/api";
@@ -25,6 +25,7 @@ import { autorun } from "mobx";
 import moment from "moment";
 
 import store from "./store";
+import SelectDateButtons from "../../components/SelectDateButtons";
 
 const Lesson = ({
   lesson,
@@ -118,7 +119,7 @@ const Schedule = () => {
               "пара",
               "пары",
               "пар",
-            ])} 
+            ])}
           </Header>
         }
       >
@@ -133,6 +134,12 @@ const Schedule = () => {
           ))}
         </List>
       </Group>
+      <Div>
+        <SelectDateButtons
+          date={store.date}
+          onChange={(date) => (store.date = date)}
+        />
+      </Div>
     </Group>
   );
 };
