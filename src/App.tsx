@@ -69,9 +69,7 @@ const App = () => {
     void (async () => {
       const launchParams = await bridge.send("VKWebAppGetLaunchParams");
       session.launchParams = launchParams;
-      const user = await api.app.getUser();
-      const [userInfo] = await api.app.getUsersInfo([user.id]);
-      session.user = { ...user, ...userInfo };
+      await session.loadUser();
       await bridge.send("VKWebAppInit");
       setIsLoaded(true);
     })();
